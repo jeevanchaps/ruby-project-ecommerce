@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Project App</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+  </head>
+
+ <script>
+    function navSearchForItem(){
+      var search = document.getElementById("nav_search_text").value;
+
+      location.replace(window.location.origin + "/items/search_results/"+ search);
+
+}
+
+    function searchByCategory(){
+      var cat = event.srcElement.id;
+      location.replace(window.location.origin + "/items/category_results/"+ cat);
+
+}
+
+    function navEnterKeyPressed(e){
+        if(e.keyCode == 13 )
+        {
+          
+            var search = document.getElementById("nav_search_text").value;
+
+            location.replace(window.location.origin + "/items/search_results/"+ search);
+        }
+
+   
+
+}
+
+   function menu_toggle(){
+     $('div.collapse.navbar-collapse.item').toggle();
+   }
+
+    function gotMail()
+    {
+        var messagesTab = document.getElementById("messages");
+        messagesTab.className="nav-link message";
+       
+    }
+</script>
+
+<nav class="navbar navbar-expand-lg navbar-dark menu">
+  <a class="navbar-brand" href="/home">gRabit </a>
+ 
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation" onclick="menu_toggle()">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse item">
+    <ul class="navbar-nav mr-auto flex-column flex-sm-row">
+      
+    <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Categories
+    </a>
+    <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-color:lightgrey">
+        
+      <% Item.categories.each do |cat| %>
+        <b><%= submit_tag cat, :id=> cat,  :class=> "dropdown-item", :onClick=> "searchByCategory()" %>
+        </b>
+        <%end%>
+  </li>
+      <li class="nav-item">
+        <a class="nav-link " href="/user_profile">User Profile</a>
+      </li>
+      <%if user_signed_in? && current_user.is_seller%>
+      <li class="nav-item">
+        <a class="nav-link " href="/items">List Item</a>
+      </li>
+      <% end %>
+      <%if user_signed_in? && !current_user.is_admin%>
+      <li class="nav-item">
+        <a class="nav-link" id="messages" href="/messages">Messages</a>
+       
+      </li>
+        <% end %>
+    </ul>
+     <div class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="text" id= "nav_search_text" placeholder="Search" aria-label="Search" onKeyPress= "navEnterKeyPress(event)" />
+      <a  onClick= "navSearchForItem()" href=""> 🔎</a>
+    </div>
+     
+     <ul class="nav navbar-nav navbar-right">
+        <% if user_signed_in? %>
+    <li class="nav-item">
+      <%= link_to "Hi, #{current_user.name}", edit_user_registration_path, class: 'nav-link' %>
+    </li>
+    <li class="nav-item">
+      <%= link_to 'Sign Out', destroy_user_session_path, method: :delete, class: 'nav-link' %>
+    </li>
+  <% else %>
+    <li class="nav-item">
+      <%= link_to 'Sign In', new_user_session_path, class: 'nav-link' %>
+    </li>
+    <li class="nav-item">
+      <%= link_to 'Sign Up', new_user_registration_path, class: 'nav-link' %>
+    </li>
+  <% end %>
+    
+    </ul>
+  </div>
+</nav>
+
+<% if user_signed_in? %>
+  <% messages = current_user.messages %>
+    <% messages.each do |m| %>
+      <% if m.is_new %>
+      
+        <%= javascript_tag "gotMail()" %>
+     
+      <% end %>
+    <% end %>
+
+<% end %>
+  
+
+<body>
+  <%if flash.key?(:error) %>
+  <div class="alert alert-danger alert-dismissible fade show" role = "alert"
+   <center><%= flash[:error] %></center>
+   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+   
+   </div>
+  <%end%>
+
+
+  <%if flash.key?(:success) %>
+  <div class="alert alert-success alert-dismissible fade show" role = "alert"
+   <center><%= flash[:success] %></center>
+   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+   
+   </div>
+    <%end%>
+
+  
+    <main class="container">
+
+      <%= yield %>
+      
+    </main>
+
+  </body>
+</html>

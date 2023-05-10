@@ -1,0 +1,53 @@
+<div style="margin-top:25px">
+
+</div>
+<div class="container">
+		<div class="card">
+			<div class="container-fliud">
+				<div class="wrapper row">
+					<div class="preview col-md-6">
+						
+						<div class="preview-pic tab-content">
+						  <div class="tab-pane active" id="pic-1">
+              <% if item.file.attached?%>
+                <% if item.file.image?%>
+                  <%= image_tag url_for(item.file.variant(resize: '300x400'))%>
+                <% else %>
+                  <%= video_tag url_for(item.file), style:'width:100%; height:auto', controls: ''%>
+                <% end %>
+              <% end %>
+              </div>
+						</div>
+						
+					</div>
+					<div class="details col-md-6">
+						<h3 class="product-title"> <%=item.name%> </h3>
+						<p class="product-description"> <%=item.description%> </p>
+            <h4>Category: <span> <%=item.category%> </span></h4>
+						<h4>Price: <span>  <%= item.price%> </span></h4>
+						<h4>Posted on: <span><%=item.created_at.strftime("%m/%d/%Y")%></span>
+						<br/>
+						<br/>
+						
+						
+						<div class="action">
+							<% if item.creator == current_user %>
+                  <%= link_to 'Edit', edit_item_path(item), class:"btn btn-primary" %>
+                  <%= link_to 'Delete', item_path(item),method: :delete, data: {confirm: "Are you sure?"}, class:"btn btn-danger" %>
+              <% end %>
+              <% user = User.find_by_id(item.user_id) %>
+              <% if current_user.user_name != user.user_name %>
+                  <%= link_to 'Message Seller', message_board_path(user.user_name),method: :get, class:"btn btn-warning" %>  
+              <% end %>
+              <% if item.creator != current_user %> 
+                  <%= link_to 'Report the Item', item_path(item),method: :post,class:"btn btn-info" %>
+              <% end %>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<br>
+	<b><center><%= link_to "Back", user_profile_path, class:"btn btn-success btn-lg" %></b>
+    </center>

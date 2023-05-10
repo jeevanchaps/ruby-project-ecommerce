@@ -1,0 +1,49 @@
+<br>
+<%= link_to 'Add New Item', new_item_path, class:"btn btn-success but", style:"margin-top:10px" %><br><br>
+<div class="container mydiv" >
+
+    <div class="row" >
+	<% items.each do |it|%>
+        <div class="col-md-4" style="margin-bottom:15px">
+            <!-- bbb_deals -->
+            <div class="bbb_deals" style="height:100%">
+                <div class="bbb_deals_slider_container">
+                    <div class=" bbb_deals_item">
+                        <div class="bbb_deals_image" style="height:200px">
+                        <% if it.file.attached?%>
+                            <% if it.file.image?%>
+                                <%= image_tag url_for(it.file.variant(resize: '300x400'))%>
+                            <% else %>
+                                 <%= video_tag url_for(it.file), style:'width:100%; height:auto', controls: ''%>
+                            <% end %>
+                        <% else %>
+                        <img src="/assets/insert.jpg" style="height:200px" />
+                        <%end%>
+                        </div>
+                        <div class="bbb_deals_content">
+                            <div class="bbb_deals_info_line d-flex flex-row justify-content-start">
+                                <div class="bbb_deals_item_category">  <%= it.category%> </div>
+                            </div>
+                            <div class="bbb_deals_info_line d-flex flex-row justify-content-start">
+                                <div class="bbb_deals_item_name"> <%= it.name%> </div>
+                                <div class="bbb_deals_item_price ml-auto">  <%= it.price%> </div>
+                            </div>
+                            <div class="available">
+                                <div class="available_line d-flex flex-row justify-content-start">
+                                   <div class="available_title">Posted on: <span><%=it.created_at.strftime("%m/%d/%Y")%></span></div>
+                                </div>
+                                <div class="available_bar"><span style="width:17%"></span></div><br>
+                                <% if it.creator == current_user %>
+                                    <%= link_to 'View', item_path(it), class:"btn btn-primary" %>
+                                    <%= link_to 'Edit', edit_item_path(it), class:"btn btn-primary" %>
+                                    <%= link_to 'Delete', item_path(it), method: :delete, data: {confirm: "Are you sure?"},  class:"btn btn-danger" %>
+                                <% end %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+		<% end %>
+	</div>
+</div>

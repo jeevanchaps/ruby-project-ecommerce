@@ -1,0 +1,32 @@
+<br>
+<h1 class="text-center" style="margin-top:5px; color:lightyellow"><b><i>Welcome to gRabit!</i></b></h1>
+
+<script>
+    function searchForItem(){
+        var search = document.getElementById("search_text").value;
+
+        location.replace("items/search_results/"+ search);
+
+}
+
+    function enterKeyPressed(e){
+        if(e.keyCode == 13 )
+        {
+            var search = document.getElementById("search_text").value;
+
+            location.replace("items/search_results/"+ search);
+        }
+
+}
+</script>
+<div style="margin-top:30px">
+<%= image_tag "logo3.png", width: 300, height: 280, class: 'd-block mx-auto' %></b>
+</div>
+
+<div id="search" class="row">
+  
+    <input type="text" name="search_text" id="search_text" placeholder="You'll find it here.." onKeyPress = "enterKeyPressed(event)"/>
+    <button onclick = "searchForItem()" onKeyPress= "searchForItem()"> 🔎 </button>
+
+</div>
+

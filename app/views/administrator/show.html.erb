@@ -1,0 +1,36 @@
+</br></br>
+<div class="jumbotron hoverable p-5" >
+
+  <div class="row" >
+
+    <div class="col-md-4 offset-md-1 mx-3 my-3">
+
+      <div class="view overlay">
+            <% if item.file.attached?%>
+                <% if item.file.image?%>
+                <%= image_tag url_for(item.file.variant(resize: '300x400'))%>
+                <% else %>
+                <%= video_tag url_for(item.file), style:'width:100%; height:auto', controls: ''%>
+                <% end %>
+              <a>
+                <div class="mask rgba-white-slight"></div>
+              </a>
+            <% end %>
+      </div>
+  </div>
+
+  <div class="card-body">
+      <h5 class="card-title"> <%=item.name%> </h5>
+      <p class="card-text"> <%=item.description%> </p>
+      <p class="card-text"> <%=item.price%> </p>
+      <p class="card-text"> <%=item.category%> </p>
+      <p class="card-text"> <%=item.creator.name%> </p>
+       <p class="card-text"> <%=item.created_at.strftime("%m/%d/%Y")%> </p>
+      
+
+      <%= link_to 'Delete Item', admin_item_path(item),method: :delete, class:"btn btn-lg btn-danger" %>
+      <%= link_to 'Go back', admin_path, class:"btn btn-lg btn-primary" %>
+      <% user = User.find_by_id(item.user_id) %>
+      
+    </div>
+</div>

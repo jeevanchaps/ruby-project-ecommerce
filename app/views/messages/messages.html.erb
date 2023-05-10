@@ -1,0 +1,44 @@
+<div style="margin-top:20px; margin-bottom:20px; background-color:lightgreen">
+<center>
+<i><h2 style="color:black"><b><%= signed_in_user.name%>'s Messages </b></h2></i>
+</center>
+</div>
+
+<script>
+
+  function setMessageThumbnailNotification(senders,messages)
+  {
+      for(let i = 0; i < senders.length; i++)
+      {
+        for(let j = 0; j < messages.length; j++)
+        {
+          if(senders[i]==messages[j].sender && messages[j].is_new)
+            {
+              var elementToChange = document.getElementById(senders[i]);
+              elementToChange.className = "list-group-item message";
+            }        
+        }
+      }
+  }
+
+</script>
+
+<ul class="list-group" >
+    <% users= [] %>
+  <% signed_in_user.messages.each do |message| %>
+ 
+    <%if !users.include?(message.sender) && message.sender != current_user.user_name%>
+        <% users.push(message.sender) %>
+        <li id = "<%= message.sender %>" class="list-group-item"> <%= link_to message.sender, messages_path() + "/" + message.sender %></li>
+    <%end%>
+
+  <%end%>
+  <%= javascript_tag do %>
+    var users= <%= users.to_json.html_safe%>
+    var messages = <%= signed_in_user.messages.to_json.html_safe %>
+     setMessageThumbnailNotification(users,messages);
+  <%end %>
+ 
+
+</ul>
+

@@ -1,0 +1,58 @@
+<div style=" margin-top:15px; margin-bottom:25px">
+<center><i><h2 style="color:lightgreen"><b>Results for <%= query %></b></h2></i>
+</center>
+</div>
+
+<% items.each do |it|%>
+
+
+    <div class="jumbotron text-center hoverable p-4">
+    
+      <div class="row">
+    
+        <div class="col-md-4 offset-md-1 mx-3 my-3">
+    
+        
+          <div class="view overlay">
+          <% if it.file.attached?%>
+          <% if it.file.image?%>
+          <%= image_tag url_for(it.file.variant(resize: '300x400'))%>
+          <% else %>
+           <%= video_tag url_for(it.file), style:'width:100%; height:auto', controls: ''%>
+           <% end %>
+   <% end %>
+            <a>
+              <div class="mask rgba-white-slight"></div>
+            </a>
+          </div>
+    
+        </div>
+       
+        <div class="col-md-7 text-md-left ml-3 mt-3">
+    
+         
+          
+            <h6 class="h6 pb-1"><i class="fas fa-desktop pr-1"></i> <%=it.category%> </h6>
+          
+    
+          <h4 class="h4 mb-4"><strong> <%=it.name%></strong> </h4>
+    
+          <p class="font-weight-normal"> Description: <%=it.description%> </p>
+          <p class="font-weight-normal"><strong> Price: <%=it.price%> </strong></p>
+          <p class="font-weight-normal"><strong> Posted On: <%=it.created_at.strftime("%m/%d/%Y")%> </strong></p>
+          
+    
+         
+          <%= link_to 'View', item_path(it), class:"btn btn-primary" %>
+          <% user = User.find_by_id(it.user_id) %>
+          <% if current_user.user_name != user.user_name %>
+           <%= link_to 'Message Seller', message_board_path(user.user_name),method: :get, class:"btn btn-warning" %>  
+          <% end %>
+         
+    
+        </div>
+    
+      </div>
+    
+    </div>
+    <% end %>

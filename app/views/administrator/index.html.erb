@@ -1,0 +1,49 @@
+<div style="margin:5px"> 
+</div><br><br>
+<% itemlist.each do |it|%>
+
+
+        <div  style="background-color: lightgrey" class="jumbotron text-center hoverable p-4 ">
+        
+            <div class="row">
+            
+                <div class="col-md-4 offset-md-1 mx-3 my-3">
+            
+                <div class="view overlay">
+                    <% if it.file.attached?%>
+                        <% if it.file.image?%>
+                        <%= image_tag url_for(it.file.variant(resize: '300x400'))%>
+                        <% else %>
+                        <%= video_tag url_for(it.file), style:'width:100%; height:auto', controls: ''%>
+                        <% end %>
+                        <a>
+                        <div class="mask rgba-white-slight"></div>
+                        </a>
+                    <% end %>
+                </div>
+                
+                </div>
+            
+                <div class="col-md-7 text-md-left ml-3 mt-3">
+            
+                <h4 class="h4 mb-3"><b> <%=it.name%> </b> </h4> 
+
+                <h5 class="mb-3"><b><i> <%=it.category%> </i></b></h5>
+                             
+                
+                <h5 class=" mb-3"><b><i> <%=it.description%> </i></b></h5>
+                <h5 class=" mb-3"><b><i> Price: <%=it.price%></i></b></h5>
+                
+                 <h5 class=" mb-3"><b><i> Posted On: <%=it.created_at.strftime("%m/%d/%Y")%></i></b></h5>
+                    
+                    
+                    <%= link_to 'View Item', admin_item_path(it), class:"btn btn-primary" %>
+                    <%= link_to 'Delete Item', admin_item_path(it), method: :delete, class:"btn btn-danger" %>
+                              
+            
+                </div>
+            
+            </div>
+        
+        </div>
+<% end %>

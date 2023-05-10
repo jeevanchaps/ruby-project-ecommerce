@@ -1,0 +1,2 @@
+module GRabitHelper
+end

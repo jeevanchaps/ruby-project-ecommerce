@@ -1,0 +1,52 @@
+<div style="margin:15px"> 
+</div><br><br>
+
+<% @items.each do |it|%>
+
+
+        <div class="jumbotron text-center hoverable p-4">
+        
+            <div class="row">
+            
+                <div class="col-md-4 offset-md-1 mx-3 my-3">
+            
+                
+                    <div class="view overlay">
+                        <% if it.file.attached?%>
+                            <% if it.file.image?%>
+                            <%= image_tag url_for(it.file.variant(resize: '300x400'))%>
+                            <% else %>
+                            <%= video_tag url_for(it.file), style:'width:100%; height:auto', controls: ''%>
+                            <% end %>
+                        <a>
+                            <div class="mask rgba-white-slight"></div>
+                        </a>
+                        <% end %>
+                    </div>
+                
+                </div>
+            
+                <div class="col-md-7 text-md-left ml-3 mt-3">
+            
+                              
+                    <h6 class="h6 pb-1"><i class="fas fa-desktop pr-1"></i> <%=it.category%> </h6>
+                
+            
+                    <h4 class="h4 mb-4"> <%=it.name%> </h4>
+                
+                    <p class="font-weight-normal"> Description: <%=it.description%> </p>
+                    <p class="font-weight-normal"><strong> Price: <%=it.price%> </strong></p>
+                    <p class="font-weight-normal"><strong> Posted On: <%=it.created_at.strftime("%m/%d/%Y")%> </strong></p>
+                   
+                    
+                    
+                    <%= link_to 'View', admin_item_path(it), class:"btn btn-primary" %>
+                    <%= link_to 'Delete', admin_item_path(it), method: :delete, class:"btn btn-danger" %>
+                   
+                                
+                </div>
+            
+            </div>
+        
+        </div>
+<% end %>

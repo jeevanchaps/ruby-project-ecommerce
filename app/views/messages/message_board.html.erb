@@ -1,0 +1,33 @@
+
+<div style="margin-top:20px; background-color:lightgreen">
+<center>
+<i><h2 style="color:black"><b>Conversation with <%= message_sender.name %> </b></h2></i>
+</center>
+</div>
+
+
+<center>
+
+    <div id= "messagebox" class=scrollable>
+        <p style="color:lightblue">
+            <% messages.each do |m| %>
+                <%= "[" + m.sender + "]: " +  m.content %><br/>
+             
+                      
+            <% end %>
+
+        </p>
+    </div>
+
+
+<div class = "footer">
+    <%= form_with model: @message, url: message_board_path, method: :post, local: true, scope: :message do |m| %>
+        <%= m.hidden_field :sender, :value => current_user.user_name %>
+        <%= m.hidden_field :recipient, :value => params[:id] %>
+       
+       
+        <div> <%= m.text_field :content, :size => "100%" %>  <%= m.submit "send", class: "btn btn-success" %> </div> 
+    <% end %>
+
+</div>
+</center>

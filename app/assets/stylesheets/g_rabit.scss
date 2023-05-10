@@ -1,0 +1,106 @@
+// Place all the styles related to the GRabit controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+
+$white: white;
+$black: black;
+$blue: blue;
+
+.navbar {
+        margin-bottom: 0;
+        background-color:black;
+       
+}
+
+.nav.navbar-nav.navbar-right li a {
+    color: rgba(16, 17, 16, 0.931);
+}
+
+.nav.navbar-nav li a {
+    color: black;
+}
+.navbar-brand li a{
+    color:black;
+
+}
+
+.menu > .navbar-brand{
+  font-size: 20px;
+  font-weight: bold;
+  
+}
+
+.item > .navbar-nav > .nav-item > .nav-link.message{
+    color: orange;
+}
+.item > .navbar-nav > .nav-item > .nav-link{
+  font-size: 18px;
+  color: lightgrey;
+  font-weight: bold;
+
+}
+
+.list-group-item.message
+{
+  background-color: orange;
+}
+
+p {
+    color: black;
+    font-family: courier;
+    font-size: 150%;
+  
+  }
+
+  
+  search_button{
+
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+
+  }
+
+  body {
+    text-align: center;
+    background-image: image-url("/assets/black.jpg");
+    // background-color: #9e8fb2;
+    // background-image: linear-gradient(to right, #9e8fb2 0%, #a7acd9 74%);
+    background-position: center center;
+    background-attachment: fixed;
+    background-repeat: reverse repeat;
+    background-size: cover;
+  }
+
+  handcursor:hover{
+
+    cursor: hand;
+
+  }
+  
+  #search {
+   
+    text-align: center;
+    display: block;
+  }
+  
+  #search_text {
+    width: 350px;
+    padding: 15px 0 15px 20px;
+    font-size: 16px;
+    font-family: Montserrat, sans-serif;
+    
+    height: 52px;
+    margin-right: 10;
+    color: black;
+    outline: black;
+    background: white;
+    float: center;
+    box-sizing: border-box;
+    
+  }
+
+  

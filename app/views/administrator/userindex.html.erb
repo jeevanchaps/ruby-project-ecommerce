@@ -1,0 +1,66 @@
+<div style="margin-top:20px; margin-bottom:25px; background-color:lightgreen">
+<center>
+<i><h2 style="color:black"><b> Deactivated Users </b></h2></i>
+</center>
+</div>
+
+
+
+<% @users.each do |it|%>
+
+        <div class="jumbotron text-center hoverable p-4">
+        
+            <div class="row">
+            
+                <div class="col-md-4 offset-md-1 mx-3 my-3">
+            
+                
+                <div class="view overlay">
+                    
+                    <% if it.profile_image.attached?%>
+                        <%= image_tag url_for(it.profile_image.variant(resize: '200x300'))%>
+                        <% end %>
+                        <a>
+                        <div class="mask rgba-white-slight"></div>
+                        </a>
+                   
+                </div>
+            
+                </div>
+            
+                <div class="col-md-7 text-md-left ml-3 ">
+            
+                              
+                    <h4 class="h4 mb-3" style="color: darkblue"><b> <%=it.name%></b> </h4>
+                                        
+                    <h4 class="h4 mb-3" style="color: darkblue" ><b> Username: <%=it.user_name%></b> </h4>
+                    <h4 class="h4 mb-3" style="color: darkblue" ><i> <%=it.email%> </i></h4>
+                    
+                    <% if it.is_buyer && !it.is_seller %>
+                    <h4 class="h4 mb-4" style="color: darkblue" ><b> Buyer </b></h4>    
+                    <% end %>
+
+                    <% if it.is_seller && !it.is_buyer %>
+                    <h4 class="h4 mb-4" style="color: darkblue" ><b> Seller </b></h4>
+                    <% end %>
+
+                    <% if it.is_seller && it.is_buyer %>
+                    <h4 class="h4 mb-4" style="color: darkblue" ><b> Both </b> </h4>
+                    <% end %>
+
+                    <% if !it.is_seller && !it.is_buyer %>
+                    <h4 class="h4 mb-4" style="color: darkblue" ><b> None</b></h4>
+                    <% end %>
+                    
+                    <h4 class="h4 mb-3" style="color: darkblue" ><b> Status: Inactive </b></h4>
+
+                    <h5><b> <%= link_to ' REACTIVATE USER ', reactivate_users_path(it), class:"btn btn-success btn-lg " %></b> </h5> 
+                   
+                                     
+                                
+                </div>
+            
+            </div>
+        
+        </div>
+<% end %>
